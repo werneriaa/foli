@@ -14,7 +14,7 @@ export const Layout: React.FC<Layout> = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <div className="w-full h-full px-4 pb-4">
+      <div className="w-full h-full px-4 sm:py-12 py-6">
         <main className="mx-auto flex w-full max-w-6xl grow flex-col">
           {children}
         </main>
