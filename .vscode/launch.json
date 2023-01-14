@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "configurations": [
+    {
+      "name": "development:web",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "outputCapture": "std",
+      "env": {
+        "PORT": "3000"
+      },
+      "sourceMapPathOverrides": {
+        "webpack:///./~/*": "${workspaceFolder}/node_modules/*",
+        "webpack://?:*/*": "${workspaceFolder}/*"
+      }
+    }
+  ]
+}
