@@ -28,7 +28,7 @@ const Home: NextPage<Home> = ({ stops }) => {
     setSuggestions({});
     setSelectedStop(key);
     router.query.stop = key;
-    router.push(router);
+    router.push({ query: { stop: key } });
   };
 
   return (

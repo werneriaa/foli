@@ -35,8 +35,7 @@ export const SearchInput: React.FC<SearchInput> = ({
     const exactMatch = filterObject(stops, ([k, v]) => k === value);
     if (exactMatch[value]?.stop_name) {
       setSelectedStop(value);
-      router.query.stop = value;
-      router.push(router);
+      router.push({ query: { stop: value } });
       return;
     }
     setSelectedStop(undefined);
