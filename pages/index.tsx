@@ -6,6 +6,7 @@ import { Suggestions } from "../components/Suggestions";
 import { useRouter } from "next/router";
 import { SelectedStop } from "../components/SelectedStop";
 import { retrieveStops } from "../functions/server";
+import { InfoBox } from "../components/InfoBox";
 
 interface Home {
   stops: Foli.Stop;
@@ -39,6 +40,7 @@ const Home: NextPage<Home> = ({ stops }) => {
         setSuggestions={setSuggestions}
         setSelectedStop={setSelectedStop}
       />
+      {!selectedStop && Object.keys(suggestions).length < 1 && <InfoBox />}
       {selectedStop ? (
         <SelectedStop
           selectedStop={selectedStop}
