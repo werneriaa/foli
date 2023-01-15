@@ -10,7 +10,7 @@ export const FavoriteList: React.FC<FavoriteList> = ({ setShowFavorites }) => {
   const { favorites } = useFavorites();
 
   return (
-    <div className="absolute top-16 bg-white shadow-lg right-4 z-20 list-none w-24 rounded">
+    <div className="absolute top-14 bg-white shadow-lg right-0 z-20 list-none w-24 rounded">
       {favorites?.map((n) => {
         return (
           <li className="flex justify-center hover:bg-gray-100" key={n}>
