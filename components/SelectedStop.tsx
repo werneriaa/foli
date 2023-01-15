@@ -45,7 +45,7 @@ export const SelectedStop: React.FC<SelectedStop> = ({
       {error ? (
         <p className="w-full py-2 text-center">{error}</p>
       ) : (
-        <table className="mt-4 w-full grid">
+        <table className="mt-4 w-full grid" data-testid="result-table">
           <thead>
             <tr className="flex w-full mb-2">
               <th className="w-full text-left">Linja</th>
