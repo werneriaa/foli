@@ -12,7 +12,7 @@
       "outputCapture": "std",
       "env": {
         "PORT": "3000",
-        "BASE_API_URL": "https://data.foli.fi/",
+        "NEXT_PUBLIC_BASE_API_URL": "https://data.foli.fi/",
         "NEXT_PUBLIC_BASE_URL": "http://localhost:3000"
       },
       "sourceMapPathOverrides": {

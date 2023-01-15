@@ -22,8 +22,6 @@ export const SelectedStop: React.FC<SelectedStop> = ({
       try {
         if (selectedStop) {
           const res = await getPrediction(selectedStop);
-          console.log(res);
-
           if (!res?.status || res.status !== "OK") throw new Error();
           setPrediction(res);
         } else {

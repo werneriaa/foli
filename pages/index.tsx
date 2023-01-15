@@ -1,11 +1,11 @@
 import type { NextPage, GetStaticProps } from "next";
 import { useEffect, useState } from "react";
-import { getStops } from "../functions/client";
 import { Layout } from "../components/Layout";
 import { SearchInput } from "../components/SearchInput";
 import { Suggestions } from "../components/Suggestions";
 import { useRouter } from "next/router";
 import { SelectedStop } from "../components/SelectedStop";
+import { retrieveStops } from "../functions/server";
 
 interface Home {
   stops: Foli.Stop;
@@ -52,7 +52,7 @@ const Home: NextPage<Home> = ({ stops }) => {
 };
 
 export const getStaticProps: GetStaticProps<Home> = async () => {
-  const stops = await getStops();
+  const stops = await retrieveStops();
 
   return {
     props: {
