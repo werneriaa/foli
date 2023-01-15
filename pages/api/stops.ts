@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { retrieveStops } from "../../functions/server";
 
@@ -13,6 +12,10 @@ export default async function handler(
     }
 
     const stops = await retrieveStops();
+
+    if ("message" in stops) {
+      throw new Error();
+    }
 
     return res.status(200).send(stops);
   } catch (err) {

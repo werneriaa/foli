@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { Header } from "./Header";
 
 interface Layout {
-  children: ReactNode | undefined;
+  children?: ReactNode;
 }
 
 export const Layout: React.FC<Layout> = ({ children }) => {

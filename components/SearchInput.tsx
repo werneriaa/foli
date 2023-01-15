@@ -1,5 +1,7 @@
+import { useRouter } from "next/router";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { MdSearch } from "react-icons/md";
+import { filterObject } from "../functions";
 
 type Entry<T> = {
   [K in keyof T]: [K, T[K]];
@@ -11,34 +13,33 @@ type SearchInput = Omit<
     HTMLInputElement
   >,
   "type" | "onChange"
-> & { stops: Foli.Stop; setSuggestions: Dispatch<SetStateAction<Foli.Stop>> };
+> & {
+  stops: Foli.Stop;
+  setSuggestions: Dispatch<SetStateAction<Foli.Stop>>;
+  setSelectedStop: Dispatch<SetStateAction<string | undefined>>;
+};
 
 export const SearchInput: React.FC<SearchInput> = ({
   stops,
   setSuggestions,
+  setSelectedStop,
   ...props
 }) => {
+  const router = useRouter();
   const [search, setSearch] = useState("");
-
-  function filterObject<T extends object>(
-    obj: T,
-    fn: (entry: Entry<T>, i: number, arr: Entry<T>[]) => boolean
-  ) {
-    return Object.fromEntries(
-      (Object.entries(obj) as Entry<T>[]).filter(fn)
-    ) as Partial<T>;
-  }
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value;
     setSearch(value);
 
     const exactMatch = filterObject(stops, ([k, v]) => k === value);
-    if (exactMatch?.stop_name) {
-      setSuggestions({});
-      console.log("Exact match", exactMatch);
+    if (exactMatch[value]?.stop_name) {
+      setSelectedStop(value);
+      router.query.stop = value;
+      router.push(router);
       return;
     }
+    setSelectedStop(undefined);
     if (value.length > 2) {
       // Check if name matches
       const normalizedValue = value.toLowerCase().replace(/\s+/g, " ");
