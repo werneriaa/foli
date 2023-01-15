@@ -31,7 +31,6 @@ When you are running tests make sure that your local development enviroment is r
 
 - Translations
 - Map which shows the location of the stop
-- Add favorite stops - No need to search everytime
-- Unit tests
+- Unit tests and integration
 - More E2E tests
 - Add GitHub actions CI/CD
