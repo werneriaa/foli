@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "configurations": [
+    {
+      "name": "development",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "outputCapture": "std",
+      "env": {
+        "PORT": "3000",
+        "BASE_API_URL": "https://data.foli.fi/",
+        "NEXT_PUBLIC_BASE_URL": "http://localhost:3000"
+      },
+      "sourceMapPathOverrides": {
+        "webpack:///./~/*": "${workspaceFolder}/node_modules/*",
+        "webpack://?:*/*": "${workspaceFolder}/*"
+      }
+    }
+  ]
+}
