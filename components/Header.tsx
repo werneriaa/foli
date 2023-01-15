@@ -14,13 +14,15 @@ export const Header: React.FC = () => {
           <FoliLogo />
         </Link>
       </div>
-      <button
-        className="text-cyan-500 h-full hover:bg-gray-100 px-4 rouned relative"
-        onClick={() => setShowFavorites((prev) => !prev)}
-      >
-        Suosikit
-      </button>
-      {showFavorites && <FavoriteList setShowFavorites={setShowFavorites} />}
+      <div className="relative h-full">
+        <button
+          className="text-cyan-500 h-full hover:bg-gray-100 px-4 rouned"
+          onClick={() => setShowFavorites((prev) => !prev)}
+        >
+          Suosikit
+        </button>
+        {showFavorites && <FavoriteList setShowFavorites={setShowFavorites} />}
+      </div>
     </header>
   );
 };
