@@ -6,10 +6,16 @@ import {
   type ReactNode,
 } from "react";
 
+export interface Favorite {
+  key: string;
+  name: string;
+}
+
 interface FavoritesContextType {
-  favorites: string[];
-  addToFavorites: (val: string) => void;
-  removeFromFavorites: (val: string) => void;
+  favorites: Favorite[];
+  addToFavorites: (key: string, name: string) => void;
+  removeFromFavorites: (key: string) => void;
+  isFavorite: (key: string) => boolean;
 }
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(
@@ -17,37 +23,43 @@ const FavoritesContext = createContext<FavoritesContextType | undefined>(
 );
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<Favorite[]>([]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const data = JSON.parse(localStorage.getItem("favorites") || "[]");
       if (data && Array.isArray(data)) {
-        setFavorites(data);
+        // Migration: convert old string[] format to Favorite[] format
+        const migrated = data.map((item: string | Favorite) =>
+          typeof item === "string" ? { key: item, name: "" } : item,
+        );
+        setFavorites(migrated);
       }
     }
   }, []);
 
-  const addToFavorites = (val: string) => {
+  const addToFavorites = (key: string, name: string) => {
     setFavorites((prev) => {
-      if (prev.includes(val)) return prev;
-      const next = [...prev, val];
+      if (prev.some((f) => f.key === key)) return prev;
+      const next = [...prev, { key, name }];
       localStorage.setItem("favorites", JSON.stringify(next));
       return next;
     });
   };
 
-  const removeFromFavorites = (val: string) => {
+  const removeFromFavorites = (key: string) => {
     setFavorites((prev) => {
-      const next = prev.filter((n) => n !== val);
+      const next = prev.filter((f) => f.key !== key);
       localStorage.setItem("favorites", JSON.stringify(next));
       return next;
     });
   };
+
+  const isFavorite = (key: string) => favorites.some((f) => f.key === key);
 
   return (
     <FavoritesContext.Provider
-      value={{ favorites, addToFavorites, removeFromFavorites }}
+      value={{ favorites, addToFavorites, removeFromFavorites, isFavorite }}
     >
       {children}
     </FavoritesContext.Provider>

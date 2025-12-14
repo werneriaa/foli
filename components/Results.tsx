@@ -33,25 +33,31 @@ export const Results: React.FC<Results> = ({ isLoading, prediction }) => {
           </svg>
         </div>
       ) : (
-        <table className="mt-4 w-full grid">
-          <thead>
-            <tr className="flex w-full mb-2 dark:text-gray-300">
-              <th className="w-full text-left">Linja</th>
-              <th className="w-full text-left pl-4">Päämäärä</th>
-              <th className="w-full text-right">Arvioitu lähtöaika</th>
-            </tr>
-          </thead>
-          <tbody>
-            {prediction?.result.map((res) => (
-              <ResultRow
-                line={res.lineref}
-                departureTime={res.expecteddeparturetime}
-                key={`${res.lineref}-${res.expecteddeparturetime}-${res.destinationdisplay}`}
-                destination={res.destinationdisplay}
-              />
-            ))}
-          </tbody>
-        </table>
+        <div className="mt-4 w-full">
+          <table className="w-full pr-4">
+            <thead className="sticky top-0 bg-white dark:bg-gray-900">
+              <tr className="flex w-full mb-2 dark:text-gray-300">
+                <th className="w-full text-left">Linja</th>
+                <th className="w-full text-left pl-4">Päämäärä</th>
+                <th className="w-full text-right pr-4">Arvioitu lähtöaika</th>
+              </tr>
+            </thead>
+          </table>
+          <div className="max-h-[60vh] overflow-y-auto scrollbar-gutter-stable">
+            <table className="w-full">
+              <tbody>
+                {prediction?.result.map((res) => (
+                  <ResultRow
+                    line={res.lineref}
+                    departureTime={res.expecteddeparturetime}
+                    key={`${res.lineref}-${res.expecteddeparturetime}-${res.destinationdisplay}`}
+                    destination={res.destinationdisplay}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
     </>
   );

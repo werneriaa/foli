@@ -13,7 +13,7 @@ export const SelectedStop: React.FC<SelectedStop> = ({
   selectedStop,
   stop_name,
 }) => {
-  const { addToFavorites, removeFromFavorites, favorites } = useFavorites();
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
 
   const {
     data: prediction,
@@ -44,18 +44,14 @@ export const SelectedStop: React.FC<SelectedStop> = ({
           type="button"
           className="ml-2"
           onClick={() => {
-            if (favorites.includes(selectedStop)) {
+            if (isFavorite(selectedStop)) {
               removeFromFavorites(selectedStop);
             } else {
-              addToFavorites(selectedStop);
+              addToFavorites(selectedStop, stop_name);
             }
           }}
         >
-          {favorites.includes(selectedStop) ? (
-            <MdFavorite />
-          ) : (
-            <MdFavoriteBorder />
-          )}
+          {isFavorite(selectedStop) ? <MdFavorite /> : <MdFavoriteBorder />}
         </button>
       </h1>
       {error ? (

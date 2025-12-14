@@ -51,28 +51,33 @@ export const FavoriteList: React.FC<FavoriteList> = ({ setShowFavorites }) => {
         </h3>
       </div>
       <ul className="py-2">
-        {favorites.map((n) => {
+        {favorites.map((fav) => {
           return (
             <li
               className="group hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-              key={n}
+              key={fav.key}
             >
               <div className="flex items-center justify-between px-4 py-2">
                 <Link
-                  className="flex items-center gap-2 text-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 flex-1"
-                  href={`/?stop=${n}`}
+                  className="flex items-center gap-2 text-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 flex-1 min-w-0"
+                  href={`/?stop=${fav.key}`}
                   onClick={() => setShowFavorites(false)}
                 >
-                  <MdPlace className="h-4 w-4" />
-                  <span className="font-medium">{n}</span>
+                  <MdPlace className="h-4 w-4 flex-shrink-0" />
+                  <span className="font-medium">{fav.key}</span>
+                  {fav.name && (
+                    <span className="text-gray-500 dark:text-gray-400 text-sm truncate">
+                      {fav.name}
+                    </span>
+                  )}
                 </Link>
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    removeFromFavorites(n);
+                    removeFromFavorites(fav.key);
                   }}
                   type="button"
-                  className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded"
+                  className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded flex-shrink-0"
                   aria-label="Remove from favorites"
                 >
                   <MdClose className="h-4 w-4 text-gray-600 dark:text-gray-400" />
