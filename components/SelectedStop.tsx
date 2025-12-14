@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { getPrediction } from "../functions/client";
 import useFavorites from "../hooks/useFavorites";
 import { Results } from "./Results";
+import { useQuery } from "@tanstack/react-query";
 
 interface SelectedStop {
   selectedStop: string;
@@ -13,36 +13,26 @@ export const SelectedStop: React.FC<SelectedStop> = ({
   selectedStop,
   stop_name,
 }) => {
-  const [prediction, setPrediction] = useState<Foli.StopPrediction | undefined>(
-    undefined,
-  );
-  const [error, setError] = useState("");
   const { addToFavorites, removeFromFavorites, favorites } = useFavorites();
-  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const retrieve = async () => {
-      try {
-        if (selectedStop) {
-          setError("");
-          setIsLoading(true);
-          const res = await getPrediction(selectedStop);
-          if (!res || "message" in res || res.status !== "OK") {
-            throw new Error();
-          }
-          setPrediction(res);
-        } else {
-          setPrediction(undefined);
-        }
-      } catch (_err) {
-        setError("Virhe. Tarkista pysäkin numero ja verkkoyhteytesi");
-        setPrediction(undefined);
-      } finally {
-        setIsLoading(false);
+  const {
+    data: prediction,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["prediction", selectedStop],
+    queryFn: () => getPrediction(selectedStop),
+    enabled: !!selectedStop,
+    select: (data) => {
+      if (!data || "message" in data || data.status !== "OK") {
+        return undefined;
       }
-    };
-    retrieve();
-  }, [selectedStop]);
+      return data;
+    },
+  });
+
+  const error =
+    isError || (prediction === undefined && !isLoading && selectedStop);
 
   return (
     <div className="mt-4">
@@ -69,7 +59,9 @@ export const SelectedStop: React.FC<SelectedStop> = ({
         </button>
       </h1>
       {error ? (
-        <p className="w-full py-2 text-center dark:text-gray-300">{error}</p>
+        <p className="w-full py-2 text-center dark:text-gray-300">
+          Virhe. Tarkista pysäkin numero ja verkkoyhteytesi
+        </p>
       ) : (
         <Results isLoading={isLoading} prediction={prediction} />
       )}

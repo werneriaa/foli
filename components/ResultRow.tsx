@@ -14,7 +14,10 @@ export const ResultRow: React.FC<ResultRow> = ({
       <td className="w-1/3 pr-4">{line}</td>
       <td className="w-1/3 px-4">{destination}</td>
       <td className="w-1/3 pl-4 text-right">
-        {new Date(departureTime * 1000).toLocaleTimeString().substring(0, 5)}
+        {new Date(departureTime * 1000).toLocaleTimeString("fi-FI", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
       </td>
     </tr>
   );

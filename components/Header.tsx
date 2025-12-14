@@ -6,7 +6,7 @@ import { useDarkMode } from "../hooks/useDarkMode";
 
 export const Header: React.FC = () => {
   const [showFavorites, setShowFavorites] = useState(false);
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const { toggleDarkMode } = useDarkMode();
 
   return (
     <header className="h-16 w-full flex px-4 py-2 items-center justify-center shadow dark:bg-gray-800 dark:shadow-gray-700">
@@ -20,12 +20,11 @@ export const Header: React.FC = () => {
           <button
             className="text-cyan-500 h-full hover:bg-gray-100 dark:hover:bg-gray-700 px-4 rounded"
             onClick={toggleDarkMode}
-            aria-label={
-              isDarkMode ? "Switch to light mode" : "Switch to dark mode"
-            }
+            aria-label="Toggle dark mode"
             type="button"
           >
-            {isDarkMode ? "☀️" : "🌙"}
+            <span className="dark:hidden">🌙</span>
+            <span className="hidden dark:inline">☀️</span>
           </button>
           <button
             className="text-cyan-500 h-full hover:bg-gray-100 dark:hover:bg-gray-700 px-4 rounded"
