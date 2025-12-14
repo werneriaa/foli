@@ -13,8 +13,12 @@ const useFavorites = () => {
   }, []);
 
   const addToFavorites = (val: string) => {
-    setFavorites([...favorites, val]);
-    localStorage.setItem("favorites", JSON.stringify([...favorites, val]));
+    setFavorites((prev) => {
+      if (prev.includes(val)) return prev;
+      const next = [...prev, val];
+      localStorage.setItem("favorites", JSON.stringify(next));
+      return next;
+    });
   };
 
   const removeFromFavorites = (val: string) => {
@@ -25,11 +29,7 @@ const useFavorites = () => {
     });
   };
 
-  const getFavorites = () => {
-    return favorites;
-  };
-
-  return { addToFavorites, removeFromFavorites, getFavorites, favorites };
+  return { addToFavorites, removeFromFavorites, favorites };
 };
 
 export default useFavorites;

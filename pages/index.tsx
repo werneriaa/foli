@@ -16,7 +16,7 @@ const Home: NextPage<Home> = ({ stops }) => {
   const router = useRouter();
   const [suggestions, setSuggestions] = useState<Foli.Stop>({});
   const [selectedStop, setSelectedStop] = useState<string | undefined>(
-    undefined
+    undefined,
   );
 
   useEffect(() => {

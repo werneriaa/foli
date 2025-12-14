@@ -3,7 +3,7 @@ import { retrieveStopPrediction } from "../../functions/server";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Foli.StopPrediction | Message>
+  res: NextApiResponse<Foli.StopPrediction | Message>,
 ) {
   try {
     if (req.method !== "GET") {

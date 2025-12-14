@@ -11,7 +11,7 @@ export const retrieveStops = async (): Promise<Foli.Stop> => {
 };
 
 export const retrieveStopPrediction = async (
-  key: string
+  key: string,
 ): Promise<Foli.StopPrediction | Message> => {
   try {
     const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}siri/sm/${key}/pretty`;

@@ -16,6 +16,7 @@ export const Results: React.FC<Results> = ({ isLoading, prediction }) => {
             fill="none"
             viewBox="0 0 24 24"
           >
+            <title>Loading spinner</title>
             <circle
               className="opacity-25"
               cx="12"
@@ -41,11 +42,11 @@ export const Results: React.FC<Results> = ({ isLoading, prediction }) => {
             </tr>
           </thead>
           <tbody>
-            {prediction?.result.map((res, i) => (
+            {prediction?.result.map((res) => (
               <ResultRow
                 line={res.lineref}
                 departureTime={res.expecteddeparturetime}
-                key={res.lineref + i}
+                key={`${res.lineref}-${res.expecteddeparturetime}-${res.destinationdisplay}`}
                 destination={res.destinationdisplay}
               />
             ))}

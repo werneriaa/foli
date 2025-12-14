@@ -1,11 +1,8 @@
 import { useRouter } from "next/router";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { MdSearch } from "react-icons/md";
 import { filterObject } from "../functions";
-
-type Entry<T> = {
-  [K in keyof T]: [K, T[K]];
-}[keyof T];
 
 type SearchInput = Omit<
   React.DetailedHTMLProps<
@@ -32,7 +29,7 @@ export const SearchInput: React.FC<SearchInput> = ({
     const value = event.currentTarget.value;
     setSearch(value);
 
-    const exactMatch = filterObject(stops, ([k, v]) => k === value);
+    const exactMatch = filterObject(stops, ([k]) => k === value);
     if (exactMatch[value]?.stop_name) {
       setSelectedStop(value);
       router.push({ query: { stop: value } });
@@ -42,7 +39,7 @@ export const SearchInput: React.FC<SearchInput> = ({
     if (value.length > 2) {
       // Check if name matches
       const normalizedValue = value.toLowerCase().replace(/\s+/g, " ");
-      const x = filterObject(stops, ([k, v]) => {
+      const x = filterObject(stops, ([k]) => {
         const normalized = stops[k]?.stop_name
           ?.toLowerCase()
           .replace(/\s+/g, " ");

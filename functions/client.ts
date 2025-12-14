@@ -1,5 +1,5 @@
 export const getPrediction = async (
-  key: string
+  key: string,
 ): Promise<Foli.StopPrediction | undefined> => {
   try {
     const query = new URLSearchParams();

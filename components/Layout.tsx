@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Header } from "./Header";
 
 interface Layout {
@@ -8,7 +8,10 @@ interface Layout {
 
 export const Layout: React.FC<Layout> = ({ children }) => {
   return (
-    <div id="layout" className="flex min-h-screen flex-col bg-white dark:bg-gray-900 transition-colors">
+    <div
+      id="layout"
+      className="flex min-h-screen flex-col bg-white dark:bg-gray-900 transition-colors"
+    >
       <Head>
         <title>Föli pysäkkiopas</title>
         <link rel="icon" href="/favicon.ico" />

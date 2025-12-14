@@ -7,6 +7,7 @@ export const InfoBox: React.FC = () => {
           href="https://data.foli.fi/doc/index"
           className="text-cyan-500 hover:underline"
           target={"_blank"}
+          rel="noopener noreferrer"
         >
           Lisätietoja
         </a>

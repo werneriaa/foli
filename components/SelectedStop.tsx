@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { getPrediction } from "../functions/client";
 import useFavorites from "../hooks/useFavorites";
-import { ResultRow } from "./ResultRow";
 import { Results } from "./Results";
 
 interface SelectedStop {
@@ -15,7 +14,7 @@ export const SelectedStop: React.FC<SelectedStop> = ({
   stop_name,
 }) => {
   const [prediction, setPrediction] = useState<Foli.StopPrediction | undefined>(
-    undefined
+    undefined,
   );
   const [error, setError] = useState("");
   const { addToFavorites, removeFromFavorites, favorites } = useFavorites();
@@ -28,12 +27,14 @@ export const SelectedStop: React.FC<SelectedStop> = ({
           setError("");
           setIsLoading(true);
           const res = await getPrediction(selectedStop);
-          if (!res?.status || res.status !== "OK") throw new Error();
+          if (!res || "message" in res || res.status !== "OK") {
+            throw new Error();
+          }
           setPrediction(res);
         } else {
           setPrediction(undefined);
         }
-      } catch (err) {
+      } catch (_err) {
         setError("Virhe. Tarkista pysäkin numero ja verkkoyhteytesi");
         setPrediction(undefined);
       } finally {
@@ -50,6 +51,7 @@ export const SelectedStop: React.FC<SelectedStop> = ({
         {" - "}
         {stop_name}
         <button
+          type="button"
           className="ml-2"
           onClick={() => {
             if (favorites.includes(selectedStop)) {
