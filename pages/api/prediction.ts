@@ -15,6 +15,7 @@ export default async function handler(
 
     if (!key) {
       res.status(400).send({ message: "Invalid query parameter!" });
+      return;
     }
 
     const prediction = await retrieveStopPrediction(key);

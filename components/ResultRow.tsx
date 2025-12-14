@@ -10,7 +10,7 @@ export const ResultRow: React.FC<ResultRow> = ({
   departureTime,
 }) => {
   return (
-    <tr className="w-full flex border-b border-b-gray-300 last:border-none py-4 text-gray-500 font-light">
+    <tr className="w-full flex border-b border-b-gray-300 dark:border-b-gray-700 last:border-none py-4 text-gray-500 dark:text-gray-400 font-light">
       <td className="w-1/3 pr-4">{line}</td>
       <td className="w-1/3 px-4">{destination}</td>
       <td className="w-1/3 pl-4 text-right">

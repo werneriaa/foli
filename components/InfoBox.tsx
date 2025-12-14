@@ -1,7 +1,7 @@
 export const InfoBox: React.FC = () => {
   return (
     <div className="mt-8 w-full justify-center">
-      <p className="text-center text-gray-500">
+      <p className="text-center text-gray-500 dark:text-gray-400">
         Tämä sivusto käyttää Fölin avointa dataa.{" "}
         <a
           href="https://data.foli.fi/doc/index"

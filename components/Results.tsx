@@ -34,7 +34,7 @@ export const Results: React.FC<Results> = ({ isLoading, prediction }) => {
       ) : (
         <table className="mt-4 w-full grid">
           <thead>
-            <tr className="flex w-full mb-2">
+            <tr className="flex w-full mb-2 dark:text-gray-300">
               <th className="w-full text-left">Linja</th>
               <th className="w-full text-left pl-4">Päämäärä</th>
               <th className="w-full text-right">Arvioitu lähtöaika</th>

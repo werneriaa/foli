@@ -45,7 +45,7 @@ export const SelectedStop: React.FC<SelectedStop> = ({
 
   return (
     <div className="mt-4">
-      <h1 className="text-2xl text-gray-500 font-extralight w-full text-center items-center flex justify-center">
+      <h1 className="text-2xl text-gray-500 dark:text-gray-400 font-extralight w-full text-center items-center flex justify-center">
         <span className="text-cyan-500 font-bold">{selectedStop}</span>
         {" - "}
         {stop_name}
@@ -67,7 +67,7 @@ export const SelectedStop: React.FC<SelectedStop> = ({
         </button>
       </h1>
       {error ? (
-        <p className="w-full py-2 text-center">{error}</p>
+        <p className="w-full py-2 text-center dark:text-gray-300">{error}</p>
       ) : (
         <Results isLoading={isLoading} prediction={prediction} />
       )}
