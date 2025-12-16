@@ -23,6 +23,7 @@ export const SelectedStop: React.FC<SelectedStop> = ({
     queryKey: ["prediction", selectedStop],
     queryFn: () => getPrediction(selectedStop),
     enabled: !!selectedStop,
+    refetchInterval: 10000, // Poll every 5 seconds for live bus location updates
     select: (data) => {
       if (!data || "message" in data || data.status !== "OK") {
         return undefined;

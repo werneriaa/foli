@@ -24,8 +24,8 @@ declare namespace Foli {
     destinationaimedarrivaltime: number;
     monitored: boolean;
     incongestion: boolean;
-    longitude: number;
-    latitude: number;
+    longitude?: number;
+    latitude?: number;
     blockref: string;
     vehicleref: string;
     visitnumber: number;

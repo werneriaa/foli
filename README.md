@@ -1,4 +1,11 @@
-# How to use
+# Föli Pysäkkiopas
+
+Real-time bus stop information for Turku, Finland using Föli's open data.
+
+**Live version:** [foli.werneri.com](https://foli.werneri.com)
+
+
+## How to use
 
 First run command to install all packages
 
@@ -15,7 +22,14 @@ npm run dev
 If you are using Visual Studio Code, you can you use Run and Debug.
 In file launch.json you can edit configurations
 
-Live version available at [Here](https://werneriaa-foli.vercel.app/)
+## Docker
+
+Build and run with Docker:
+
+```bash
+docker build -t foli .
+docker run -p 3000:3000 foli
+```
 
 # Tests
 

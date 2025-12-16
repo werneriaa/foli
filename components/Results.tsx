@@ -1,11 +1,69 @@
+import dynamic from "next/dynamic";
+import type { ComponentType } from "react";
+import { useState } from "react";
 import { ResultRow } from "./ResultRow";
+
+interface MapModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  latitude: number;
+  longitude: number;
+  busLine: string;
+  destination: string;
+}
+
+const MapModal = dynamic<MapModalProps>(() => import("./MapModal"), {
+  ssr: false,
+}) as ComponentType<MapModalProps>;
 
 interface Results {
   prediction: Foli.StopPrediction | undefined;
   isLoading: boolean;
 }
 
+interface SelectedBus {
+  __tripref: string;
+  line: string;
+  destination: string;
+  latitude: number;
+  longitude: number;
+}
+
 export const Results: React.FC<Results> = ({ isLoading, prediction }) => {
+  const [selectedBus, setSelectedBus] = useState<SelectedBus | null>(null);
+
+  const handleMapClick = (bus: SelectedBus) => {
+    console.log("Map click for bus:", bus);
+    setSelectedBus(bus);
+  };
+
+  const handleCloseMap = () => {
+    setSelectedBus(null);
+  };
+
+  console.log("Results component render:", { isLoading, prediction });
+
+  // Find updated coordinates for selected bus from latest prediction data
+  const getUpdatedBusLocation = (): SelectedBus | null => {
+    if (!selectedBus || !prediction?.result) return selectedBus;
+
+    const updatedBus = prediction.result.find(
+      (res) => res.__tripref === selectedBus.__tripref,
+    );
+
+    if (updatedBus && updatedBus.latitude && updatedBus.longitude) {
+      return {
+        ...selectedBus,
+        latitude: updatedBus.latitude,
+        longitude: updatedBus.longitude,
+      };
+    }
+
+    return selectedBus;
+  };
+
+  const updatedSelectedBus = getUpdatedBusLocation();
+
   return (
     <>
       {isLoading ? (
@@ -37,9 +95,10 @@ export const Results: React.FC<Results> = ({ isLoading, prediction }) => {
           <table className="w-full pr-4">
             <thead className="sticky top-0 bg-white dark:bg-gray-900">
               <tr className="flex w-full mb-2 dark:text-gray-300">
-                <th className="w-full text-left">Linja</th>
-                <th className="w-full text-left pl-4">Päämäärä</th>
-                <th className="w-full text-right pr-4">Arvioitu lähtöaika</th>
+                <th className="w-1/5 text-left">Linja</th>
+                <th className="w-2/5 text-left">Päämäärä</th>
+                <th className="w-1/5 text-center px-2">Saapuu</th>
+                <th className="w-1/5 text-right pr-16 mr-2">Klo</th>
               </tr>
             </thead>
           </table>
@@ -52,12 +111,35 @@ export const Results: React.FC<Results> = ({ isLoading, prediction }) => {
                     departureTime={res.expecteddeparturetime}
                     key={`${res.lineref}-${res.expecteddeparturetime}-${res.destinationdisplay}`}
                     destination={res.destinationdisplay}
+                    longitude={res.longitude}
+                    latitude={res.latitude}
+                    onMapClick={() => {
+                      if (!res.latitude || !res.longitude) return;
+                      handleMapClick({
+                        line: res.lineref,
+                        destination: res.destinationdisplay,
+                        latitude: res.latitude,
+                        longitude: res.longitude,
+                        __tripref: res.__tripref,
+                      });
+                    }}
                   />
                 ))}
               </tbody>
             </table>
           </div>
         </div>
+      )}
+
+      {updatedSelectedBus && (
+        <MapModal
+          isOpen={true}
+          onClose={handleCloseMap}
+          latitude={updatedSelectedBus.latitude}
+          longitude={updatedSelectedBus.longitude}
+          busLine={updatedSelectedBus.line}
+          destination={updatedSelectedBus.destination}
+        />
       )}
     </>
   );
