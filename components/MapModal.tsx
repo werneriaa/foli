@@ -3,21 +3,25 @@ import { MdClose } from "react-icons/md";
 import MapContent from "./MapContent";
 
 interface MapModalProps {
-  isOpen: boolean;
   onClose: () => void;
   latitude: number;
   longitude: number;
   busLine: string;
   destination: string;
+  stopLatitude?: number;
+  stopLongitude?: number;
+  stopName?: string;
 }
 
 const MapModal: React.FC<MapModalProps> = ({
-  isOpen,
   onClose,
   latitude,
   longitude,
   busLine,
   destination,
+  stopLatitude,
+  stopLongitude,
+  stopName,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -26,18 +30,14 @@ const MapModal: React.FC<MapModalProps> = ({
       if (e.key === "Escape") onClose();
     };
 
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscape);
-      document.body.style.overflow = "hidden";
-    }
+    document.addEventListener("keydown", handleEscape);
+    document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
       document.body.style.overflow = "unset";
     };
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
+  }, [onClose]);
 
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: Backdrop click to close modal
@@ -79,10 +79,12 @@ const MapModal: React.FC<MapModalProps> = ({
         {/* Map */}
         <div className="h-[calc(100%-80px)]">
           <MapContent
-            latitude={latitude}
-            longitude={longitude}
+            vehicleLatitude={latitude}
+            vehicleLongitude={longitude}
             busLine={busLine}
             destination={destination}
+            stopLatitude={stopLatitude}
+            stopLongitude={stopLongitude}
           />
         </div>
 

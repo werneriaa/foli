@@ -38,7 +38,7 @@ export const ResultRow: React.FC<ResultRow> = ({
         {getMinutesUntilArrival(departureTime)}
       </td>
       <td
-        className={`w-1/5 pl-2 text-right flex items-center justify-end gap-2 ${hasLocation ? "" : "pr-12"}`}
+        className={`w-1/5 pl-2 text-right flex items-center justify-end gap-2 ${hasLocation ? "" : "pr-11"}`}
       >
         <span>
           {new Date(departureTime * 1000).toLocaleTimeString("fi-FI", {
@@ -50,7 +50,7 @@ export const ResultRow: React.FC<ResultRow> = ({
           <button
             type="button"
             onClick={onMapClick}
-            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-cyan-500 pr-3"
+            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-cyan-500 mr-3"
             title="Näytä bussin sijainti kartalla"
           >
             <MdLocationOn className="h-5 w-5" />

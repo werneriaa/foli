@@ -2,14 +2,17 @@ import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
 import { useState } from "react";
 import { ResultRow } from "./ResultRow";
+import stopsData from "../public/stopsData.json";
 
 interface MapModalProps {
-  isOpen: boolean;
   onClose: () => void;
   latitude: number;
   longitude: number;
   busLine: string;
   destination: string;
+  stopLatitude?: number;
+  stopLongitude?: number;
+  stopName?: string;
 }
 
 const MapModal = dynamic<MapModalProps>(() => import("./MapModal"), {
@@ -19,6 +22,7 @@ const MapModal = dynamic<MapModalProps>(() => import("./MapModal"), {
 interface Results {
   prediction: Foli.StopPrediction | undefined;
   isLoading: boolean;
+  selectedStop: string;
 }
 
 interface SelectedBus {
@@ -29,19 +33,31 @@ interface SelectedBus {
   longitude: number;
 }
 
-export const Results: React.FC<Results> = ({ isLoading, prediction }) => {
+export const Results: React.FC<Results> = ({
+  isLoading,
+  prediction,
+  selectedStop,
+}) => {
   const [selectedBus, setSelectedBus] = useState<SelectedBus | null>(null);
 
+  // Type assertion for stopsData to allow dynamic access
+  const stops = stopsData as Record<
+    string,
+    {
+      stop_code: string;
+      stop_name: string;
+      stop_lat: number;
+      stop_lon: number;
+    }
+  >;
+
   const handleMapClick = (bus: SelectedBus) => {
-    console.log("Map click for bus:", bus);
     setSelectedBus(bus);
   };
 
   const handleCloseMap = () => {
     setSelectedBus(null);
   };
-
-  console.log("Results component render:", { isLoading, prediction });
 
   // Find updated coordinates for selected bus from latest prediction data
   const getUpdatedBusLocation = (): SelectedBus | null => {
@@ -51,7 +67,7 @@ export const Results: React.FC<Results> = ({ isLoading, prediction }) => {
       (res) => res.__tripref === selectedBus.__tripref,
     );
 
-    if (updatedBus && updatedBus.latitude && updatedBus.longitude) {
+    if (updatedBus?.latitude && updatedBus?.longitude) {
       return {
         ...selectedBus,
         latitude: updatedBus.latitude,
@@ -133,12 +149,14 @@ export const Results: React.FC<Results> = ({ isLoading, prediction }) => {
 
       {updatedSelectedBus && (
         <MapModal
-          isOpen={true}
           onClose={handleCloseMap}
           latitude={updatedSelectedBus.latitude}
           longitude={updatedSelectedBus.longitude}
           busLine={updatedSelectedBus.line}
           destination={updatedSelectedBus.destination}
+          stopLatitude={stops[selectedStop]?.stop_lat}
+          stopLongitude={stops[selectedStop]?.stop_lon}
+          stopName={stops[selectedStop]?.stop_name}
         />
       )}
     </>

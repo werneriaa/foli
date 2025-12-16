@@ -60,7 +60,11 @@ export const SelectedStop: React.FC<SelectedStop> = ({
           Virhe. Tarkista pysäkin numero ja verkkoyhteytesi
         </p>
       ) : (
-        <Results isLoading={isLoading} prediction={prediction} />
+        <Results
+          isLoading={isLoading}
+          prediction={prediction}
+          selectedStop={selectedStop}
+        />
       )}
     </div>
   );
