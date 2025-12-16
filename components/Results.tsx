@@ -110,11 +110,19 @@ export const Results: React.FC<Results> = ({
         <div className="mt-4 w-full">
           <table className="w-full pr-4">
             <thead className="sticky top-0 bg-white dark:bg-gray-900">
-              <tr className="flex w-full mb-2 dark:text-gray-300">
-                <th className="w-1/5 text-left">Linja</th>
-                <th className="w-2/5 text-left">Päämäärä</th>
-                <th className="w-1/5 text-center px-2">Saapuu</th>
-                <th className="w-1/5 text-right pr-16 mr-2">Klo</th>
+              <tr className="flex w-full mb-2 dark:text-gray-300 text-sm sm:text-base min-w-96 overflow-auto">
+                <th className="sm:w-1/5 w-[20%] flex-shrink-0 text-left">
+                  Linja
+                </th>
+                <th className="sm:w-2/5 w-[25%] flex-shrink-0 text-left">
+                  Päämäärä
+                </th>
+                <th className="sm:w-1/5 w-[25%] flex-shrink-0 text-center px-2">
+                  Saapuu
+                </th>
+                <th className="sm:w-1/5 w-[30%] flex-shrink-0 text-right pr-16 mr-2">
+                  Klo
+                </th>
               </tr>
             </thead>
           </table>

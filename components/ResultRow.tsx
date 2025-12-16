@@ -31,14 +31,14 @@ export const ResultRow: React.FC<ResultRow> = ({
     latitude !== 0 && longitude !== 0 && !!latitude && !!longitude;
 
   return (
-    <tr className="w-full flex border-b border-b-gray-300 dark:border-b-gray-700 last:border-none py-4 text-gray-500 dark:text-gray-400 font-light items-center">
-      <td className="w-1/5 pr-2">{line}</td>
-      <td className="w-2/5 px-2 truncate">{destination}</td>
-      <td className="w-1/5 px-2 text-center font-medium text-cyan-600 dark:text-cyan-400">
+    <tr className="w-full flex border-b border-b-gray-300 dark:border-b-gray-700 last:border-none py-4 text-gray-500 dark:text-gray-400 font-light items-center text-sm sm:text-base">
+      <td className="sm:w-1/5 w-[20%] pr-2">{line}</td>
+      <td className="sm:w-2/5 w-[25%] px-2 truncate">{destination}</td>
+      <td className="sm:w-1/5 w-[25%] px-2 text-center font-medium text-cyan-600 dark:text-cyan-400">
         {getMinutesUntilArrival(departureTime)}
       </td>
       <td
-        className={`w-1/5 pl-2 text-right flex items-center justify-end gap-2`}
+        className={`sm:w-1/5 w-[30%] pl-2 text-right flex items-center justify-end gap-2`}
       >
         <span>
           {new Date(departureTime * 1000).toLocaleTimeString("fi-FI", {
