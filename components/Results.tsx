@@ -107,51 +107,47 @@ export const Results: React.FC<Results> = ({
           </svg>
         </div>
       ) : (
-        <div className="mt-4 w-full">
-          <table className="w-full pr-4">
-            <thead className="sticky top-0 bg-white dark:bg-gray-900">
-              <tr className="flex w-full mb-2 dark:text-gray-300 text-sm sm:text-base min-w-96 overflow-auto">
-                <th className="sm:w-1/5 w-[20%] flex-shrink-0 text-left">
+        <div className="mt-4 w-full max-h-[60vh] overflow-auto scrollbar-gutter-stable bg-white dark:bg-gray-900">
+          <table className="w-full">
+            <thead className="sticky top-0 bg-white dark:bg-gray-900 z-10">
+              <tr className="flex w-full mb-2 dark:text-gray-300 text-sm sm:text-base">
+                <th className="sm:w-1/5 w-[15%] flex-shrink-0 text-left">
                   Linja
                 </th>
-                <th className="sm:w-2/5 w-[25%] flex-shrink-0 text-left">
+                <th className="sm:w-2/5 w-[30%] flex-shrink-0 text-left">
                   Päämäärä
                 </th>
-                <th className="sm:w-1/5 w-[25%] flex-shrink-0 text-center px-2">
+                <th className="sm:w-1/5 w-[25%] flex-shrink-0 text-center">
                   Saapuu
                 </th>
-                <th className="sm:w-1/5 w-[30%] flex-shrink-0 text-right pr-16 mr-2">
+                <th className="sm:w-1/5 w-[30%] flex-shrink-0 text-end sm:pr-12 pr-6">
                   Klo
                 </th>
               </tr>
             </thead>
+            <tbody>
+              {prediction?.result.map((res) => (
+                <ResultRow
+                  line={res.lineref}
+                  departureTime={res.expecteddeparturetime}
+                  key={`${res.lineref}-${res.expecteddeparturetime}-${res.destinationdisplay}`}
+                  destination={res.destinationdisplay}
+                  longitude={res.longitude}
+                  latitude={res.latitude}
+                  onMapClick={() => {
+                    if (!res.latitude || !res.longitude) return;
+                    handleMapClick({
+                      line: res.lineref,
+                      destination: res.destinationdisplay,
+                      latitude: res.latitude,
+                      longitude: res.longitude,
+                      __tripref: res.__tripref,
+                    });
+                  }}
+                />
+              ))}
+            </tbody>
           </table>
-          <div className="max-h-[60vh] overflow-y-auto scrollbar-gutter-stable">
-            <table className="w-full">
-              <tbody>
-                {prediction?.result.map((res) => (
-                  <ResultRow
-                    line={res.lineref}
-                    departureTime={res.expecteddeparturetime}
-                    key={`${res.lineref}-${res.expecteddeparturetime}-${res.destinationdisplay}`}
-                    destination={res.destinationdisplay}
-                    longitude={res.longitude}
-                    latitude={res.latitude}
-                    onMapClick={() => {
-                      if (!res.latitude || !res.longitude) return;
-                      handleMapClick({
-                        line: res.lineref,
-                        destination: res.destinationdisplay,
-                        latitude: res.latitude,
-                        longitude: res.longitude,
-                        __tripref: res.__tripref,
-                      });
-                    }}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
         </div>
       )}
 

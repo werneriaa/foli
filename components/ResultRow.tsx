@@ -32,14 +32,14 @@ export const ResultRow: React.FC<ResultRow> = ({
 
   return (
     <tr className="w-full flex border-b border-b-gray-300 dark:border-b-gray-700 last:border-none py-4 text-gray-500 dark:text-gray-400 font-light items-center text-sm sm:text-base">
-      <td className="sm:w-1/5 w-[20%] pr-2">{line}</td>
-      <td className="sm:w-2/5 w-[25%] px-2 truncate">{destination}</td>
-      <td className="sm:w-1/5 w-[25%] px-2 text-center font-medium text-cyan-600 dark:text-cyan-400">
+      <td className="sm:w-1/5 w-[15%] flex-shrink-0">{line}</td>
+      <td className="sm:w-2/5 w-[30%] flex-shrink-0 truncate pr-2">
+        {destination}
+      </td>
+      <td className="sm:w-1/5 w-[25%] flex-shrink-0 text-center font-medium text-cyan-600 dark:text-cyan-400">
         {getMinutesUntilArrival(departureTime)}
       </td>
-      <td
-        className={`sm:w-1/5 w-[30%] pl-2 text-right flex items-center justify-end gap-2`}
-      >
+      <td className="sm:w-1/5 w-[30%] flex-shrink-0 text-right flex items-center justify-end gap-1">
         <span>
           {new Date(departureTime * 1000).toLocaleTimeString("fi-FI", {
             hour: "2-digit",
@@ -50,13 +50,13 @@ export const ResultRow: React.FC<ResultRow> = ({
           <button
             type="button"
             onClick={onMapClick}
-            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-cyan-500 mr-3"
+            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-cyan-500"
             title="Näytä bussin sijainti kartalla"
           >
             <MdLocationOn className="h-5 w-5" />
           </button>
         ) : (
-          <div className="h-7 w-7 mr-3 bg-transparent" />
+          <div className="h-7 w-7 bg-transparent" />
         )}
       </td>
     </tr>
