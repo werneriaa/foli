@@ -85,6 +85,7 @@ const MapModal: React.FC<MapModalProps> = ({
             destination={destination}
             stopLatitude={stopLatitude}
             stopLongitude={stopLongitude}
+            stopName={stopName}
           />
         </div>
 

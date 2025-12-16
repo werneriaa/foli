@@ -38,7 +38,7 @@ export const ResultRow: React.FC<ResultRow> = ({
         {getMinutesUntilArrival(departureTime)}
       </td>
       <td
-        className={`w-1/5 pl-2 text-right flex items-center justify-end gap-2 ${hasLocation ? "" : "pr-11"}`}
+        className={`w-1/5 pl-2 text-right flex items-center justify-end gap-2`}
       >
         <span>
           {new Date(departureTime * 1000).toLocaleTimeString("fi-FI", {
@@ -46,7 +46,7 @@ export const ResultRow: React.FC<ResultRow> = ({
             minute: "2-digit",
           })}
         </span>
-        {hasLocation && (
+        {hasLocation ? (
           <button
             type="button"
             onClick={onMapClick}
@@ -55,6 +55,8 @@ export const ResultRow: React.FC<ResultRow> = ({
           >
             <MdLocationOn className="h-5 w-5" />
           </button>
+        ) : (
+          <div className="h-7 w-7 mr-3 bg-transparent" />
         )}
       </td>
     </tr>
